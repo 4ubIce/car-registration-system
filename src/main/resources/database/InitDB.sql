@@ -1,3 +1,9 @@
+DROP TABLE if exists cars cascade;
+DROP TABLE if exists status cascade;
+
+DROP SEQUENCE if exists status_id_seq;
+DROP SEQUENCE if exists cars_id_seq;
+
 CREATE SEQUENCE IF NOT EXISTS public.status_id_seq
     INCREMENT 1
     START 1
@@ -17,9 +23,6 @@ CREATE SEQUENCE IF NOT EXISTS public.cars_id_seq
 
 ALTER SEQUENCE public.cars_id_seq
     OWNER TO postgres;
-
-DROP TABLE if exists cars cascade;
-DROP TABLE if exists status cascade;
 
 CREATE TABLE IF NOT EXISTS public.status
 (
