@@ -72,10 +72,10 @@ public class Car implements Serializable, Cloneable {
 
     @Override
     public Object clone() {
-        Car task = new Car();
-        task.id = id;
-        task.model = model;
-        task.status = status;
-        return task;
+        Car car = new Car();
+        car.id = id;
+        car.model = model;
+        car.status = status;
+        return car;
     }
 }
