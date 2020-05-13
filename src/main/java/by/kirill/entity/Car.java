@@ -5,6 +5,11 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "cars")
+@NamedQueries({
+        @NamedQuery(
+                name = "Task.findAllByStatusId",
+                query = "select e from Car e where e.status.id = ?1")
+})
 public class Car implements Serializable, Cloneable {
 
     @Id
