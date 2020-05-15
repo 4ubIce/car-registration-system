@@ -2,12 +2,26 @@ package by.kirill.entity;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Status {
+@NamedQueries({
+        @NamedQuery(
+                name = "Status.findByName",
+                query = "select e from Status e where upper(e.statusname) like concat('%',upper(?1),'%')")
+})
+public class Status implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "status_id_generator",
+            sequenceName = "status_id_seq",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Integer id;
 
     @Column(name = "name")

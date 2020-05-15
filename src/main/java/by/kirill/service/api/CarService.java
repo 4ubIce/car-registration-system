@@ -1,6 +1,7 @@
 package by.kirill.service.api;
 
 import by.kirill.entity.Car;
+import by.kirill.entity.dto.CarDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +16,8 @@ public interface CarService {
     boolean existsById(Integer id) ;
 
     Optional<Car> findById(Integer id);
+
+    Car create(CarDTO taskDTO);
+
+    Car update(CarDTO taskDTO, Integer id);
 }

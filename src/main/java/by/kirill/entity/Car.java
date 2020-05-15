@@ -7,13 +7,21 @@ import java.io.Serializable;
 @Table(name = "cars")
 @NamedQueries({
         @NamedQuery(
-                name = "Task.findAllByStatusId",
+                name = "Car.findAllByStatusId",
                 query = "select e from Car e where e.status.id = ?1")
 })
 public class Car implements Serializable, Cloneable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "car_id_generator",
+            sequenceName = "car_id_seq",
+            initialValue = 1,
+            allocationSize = 1
+    )
     private Integer id;
 
     @Column(name = "model")

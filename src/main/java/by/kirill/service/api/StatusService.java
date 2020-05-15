@@ -15,4 +15,6 @@ public interface StatusService {
 
     Optional<Status> findById(Integer id);
 
+    Status findByName(String name);
+
 }
