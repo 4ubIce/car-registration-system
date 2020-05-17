@@ -1,5 +1,7 @@
 package by.kirill.service.api;
 
+import by.kirill.controller.handler.exceptions.CarNotFoundException;
+import by.kirill.controller.handler.exceptions.StatusIncorrectException;
 import by.kirill.entity.Car;
 import by.kirill.entity.dto.CarDTO;
 
@@ -17,7 +19,7 @@ public interface CarService {
 
     Optional<Car> findById(Integer id);
 
-    Car create(CarDTO taskDTO);
+    Car create(CarDTO carDTO);
 
-    Car update(CarDTO taskDTO, Integer id);
+    Car update(CarDTO carDTO, Integer id) throws CarNotFoundException, StatusIncorrectException;
 }

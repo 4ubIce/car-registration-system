@@ -1,5 +1,7 @@
 package by.kirill.controller;
 
+import by.kirill.controller.handler.exceptions.CarNotFoundException;
+import by.kirill.controller.handler.exceptions.StatusIncorrectException;
 import by.kirill.entity.dto.CarDTO;
 import by.kirill.service.api.CarService;
 import by.kirill.service.api.StatusService;
@@ -17,10 +19,10 @@ import java.util.Optional;
 public class RestApiController {
 
     @Autowired
-    CarService carService;
+    private CarService carService;
 
     @Autowired
-    StatusService statusService;
+    private StatusService statusService;
 
     @GetMapping("/cars")
     public List<?> getCars() {
@@ -28,13 +30,29 @@ public class RestApiController {
     }
 
     @GetMapping("/car/{id}")
-    public ResponseEntity<?> getCar(@PathVariable Integer id) {
+    public ResponseEntity<?> getCar(@PathVariable Integer id) throws CarNotFoundException {
         Optional<?> car = carService.findById(id);
+        if (car.isPresent()) {
             return new ResponseEntity<>(car.get(), HttpStatus.OK);
+        } else{
+            throw new CarNotFoundException();
+        }
     }
 
     @PostMapping(path = "/createcar", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> newCar(@RequestBody CarDTO carDTO) {
         return new ResponseEntity<>(carService.create(carDTO), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "/updatecar/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateCar(@RequestBody CarDTO carDTO, @PathVariable Integer id)
+            throws CarNotFoundException, StatusIncorrectException {
+        return new ResponseEntity<>(carService.update(carDTO, id), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/deletecar/{id}")
+    public ResponseEntity<?> deleteCar(@PathVariable Integer id) {
+            carService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 }
