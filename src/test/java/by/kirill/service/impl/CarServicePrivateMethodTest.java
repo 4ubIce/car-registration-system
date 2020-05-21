@@ -37,6 +37,7 @@ public class CarServicePrivateMethodTest {
     @Test
     public void testM() {
         CarDTO carDTO = new CarDTO("Mersedes", 1);
+        //ReflectionTestUtils.invokeMethod we get access to private method of class
         assertTrue(ReflectionTestUtils.invokeMethod(carServiceImpl,"isParamsCorrect", carDTO));
     }
 }
