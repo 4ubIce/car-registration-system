@@ -19,11 +19,16 @@ import java.util.Optional;
 @Transactional
 public class CarServiceImpl implements CarService {
 
-    @Autowired
+//    @Autowired
     private CarRepository carRepository;
 
-    @Autowired
+//    @Autowired
     private StatusService statusService;
+
+    public CarServiceImpl(CarRepository carRepository, StatusService statusService) {
+        this.carRepository = carRepository;
+        this.statusService = statusService;
+    }
 
     @Override
     public List<Car> findAll() {
@@ -95,7 +100,7 @@ public class CarServiceImpl implements CarService {
     private boolean isStatusCorrect(CarDTO carDTO, Car carToUpdate) throws StatusIncorrectException {
 
         Integer newStatusId = carDTO.getStatusId();
-        Status defaultStatus = statusService.findByName("available");
+        Status defaultStatus = statusService.findByName("available").get(0);
 
         if (newStatusId == null) {
             return false;
@@ -119,7 +124,7 @@ public class CarServiceImpl implements CarService {
 
     private boolean isParamsCorrect(CarDTO carDTO) {
         try {
-            Status defaultStatus = statusService.findByName("available");
+            Status defaultStatus = statusService.findByName("available").get(0);
             if (carDTO.getId() != null
                     || carDTO.getModel().isEmpty()
                     || carDTO.getStatusId() != defaultStatus.getId()) {

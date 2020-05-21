@@ -25,7 +25,7 @@ public class Status implements Serializable {
     )
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique=true)
     private String statusname;
 
     public Status() {

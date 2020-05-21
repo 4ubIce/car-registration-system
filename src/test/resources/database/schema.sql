@@ -58,7 +58,7 @@
 --    OWNER to postgres;
 
 
-DROP TABLE if exists car cascade;
+DROP TABLE if exists cars cascade;
 DROP TABLE if exists status cascade;
 
 create table status(

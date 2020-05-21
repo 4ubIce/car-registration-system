@@ -1,7 +1,6 @@
 package by.kirill.controller.handler;
 
-import by.kirill.controller.handler.exceptions.CarNotFoundException;
-import by.kirill.controller.handler.exceptions.StatusIncorrectException;
+import by.kirill.controller.handler.exceptions.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value
-            = {CarNotFoundException.class, StatusIncorrectException.class})
+            = {CarNotFoundException.class, StatusIncorrectException.class
+                , StatusNotFoundException.class, StatusNotUpdatebleException.class
+                , StatusNotUniqueException.class})
     protected ResponseEntity<Object> handleCustomException(
             Exception ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
