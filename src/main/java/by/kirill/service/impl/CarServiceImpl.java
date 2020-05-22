@@ -2,6 +2,7 @@ package by.kirill.service.impl;
 
 import by.kirill.controller.handler.exceptions.CarNotFoundException;
 import by.kirill.controller.handler.exceptions.StatusIncorrectException;
+import by.kirill.controller.handler.exceptions.StatusNotFoundException;
 import by.kirill.dao.CarRepository;
 import by.kirill.entity.Car;
 import by.kirill.entity.Status;
@@ -93,7 +94,7 @@ public class CarServiceImpl implements CarService {
 
     private boolean isModelCorrect(CarDTO carDTO) {
 
-        return carDTO.getModel() != null;
+        return (carDTO.getModel() != null && !carDTO.getModel().isEmpty());
 
     }
 
@@ -126,6 +127,7 @@ public class CarServiceImpl implements CarService {
         try {
             Status defaultStatus = statusService.findByName("available").get(0);
             if (carDTO.getId() != null
+                    || carDTO.getModel() == null
                     || carDTO.getModel().isEmpty()
                     || carDTO.getStatusId() != defaultStatus.getId()) {
                 return false;
