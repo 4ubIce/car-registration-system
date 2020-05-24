@@ -29,7 +29,7 @@ gradle test
 
 ### API adress
 
-http://localhost:8080/api/v1/
+http://localhost:8080/api/
 
 ## The application provides the following api:
 
