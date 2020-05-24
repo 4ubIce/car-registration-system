@@ -2,14 +2,12 @@ package by.kirill.service.impl;
 
 import by.kirill.controller.handler.exceptions.CarNotFoundException;
 import by.kirill.controller.handler.exceptions.StatusIncorrectException;
-import by.kirill.controller.handler.exceptions.StatusNotFoundException;
 import by.kirill.dao.CarRepository;
 import by.kirill.entity.Car;
 import by.kirill.entity.Status;
 import by.kirill.entity.dto.CarDTO;
 import by.kirill.service.api.CarService;
 import by.kirill.service.api.StatusService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +18,8 @@ import java.util.Optional;
 @Transactional
 public class CarServiceImpl implements CarService {
 
-//    @Autowired
     private CarRepository carRepository;
 
-//    @Autowired
     private StatusService statusService;
 
     public CarServiceImpl(CarRepository carRepository, StatusService statusService) {
@@ -127,8 +123,7 @@ public class CarServiceImpl implements CarService {
         try {
             Status defaultStatus = statusService.findByName("available").get(0);
             if (carDTO.getId() != null
-                    || carDTO.getModel() == null
-                    || carDTO.getModel().isEmpty()
+                    || !isModelCorrect(carDTO)
                     || carDTO.getStatusId() != defaultStatus.getId()) {
                 return false;
             }

@@ -1,11 +1,10 @@
 package by.kirill.service.impl;
 
 import by.kirill.controller.handler.exceptions.CarNotFoundException;
-import by.kirill.controller.handler.exceptions.StatusNotFoundException;
 import by.kirill.entity.dto.CarDTO;
 import by.kirill.service.api.CarService;
+import by.kirill.service.api.StatusService;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +20,9 @@ public class CarServicePublicMethodTest {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private StatusService statusService;
 
     @Test
     public void carService_findAll_notEmpty() {
@@ -47,16 +49,24 @@ public class CarServicePublicMethodTest {
     @Test
     public void carService_create_sizeNotIncreasedWhithWrongParamsAndThrowException() {
         int size = carService.findAll().size();
-        Assertions.assertThrows(IllegalArgumentException.class,() -> carService.create(
+        assertThrows(IllegalArgumentException.class,() -> carService.create(
                 new CarDTO("Test car", 2)));
-        Assertions.assertThrows(IllegalArgumentException.class,() -> carService.create(
+        assertThrows(IllegalArgumentException.class,() -> carService.create(
                 new CarDTO("", 1)));
         assertEquals(size, carService.findAll().size());
     }
 
     @Test
     public void carService_update_throwExceptionWithWrongCarId() {
-        Assertions.assertThrows(CarNotFoundException.class, () -> carService.update(
+        assertThrows(CarNotFoundException.class, () -> carService.update(
                 new CarDTO("Volvo", 1), 8));
     }
+
+    @Test
+    public void carService_delete_sizeDecreasedWhithRightParams() {
+        int size = carService.findAll().size();
+        carService.deleteById(2);
+        assertEquals(size - 1, carService.findAll().size());
+    }
+
 }

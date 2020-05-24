@@ -100,7 +100,12 @@ public class RestApiController {
 
     @DeleteMapping(path = "/status/delete/{id}")
     public ResponseEntity<?> deleteStatus(@PathVariable Integer id) throws StatusNotUpdatebleException {
-        statusService.deleteById(id);
+        try {
+            statusService.deleteById(id);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            throw new StatusNotUpdatebleException("The status cannot be deleted." +
+                    " Cars with this status were found");
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

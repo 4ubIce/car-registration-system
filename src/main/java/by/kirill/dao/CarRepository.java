@@ -1,11 +1,8 @@
 package by.kirill.dao;
 
-import by.kirill.controller.handler.exceptions.CarNotFoundException;
-import by.kirill.controller.handler.exceptions.StatusNotFoundException;
 import by.kirill.entity.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository

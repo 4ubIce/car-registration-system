@@ -6,7 +6,6 @@ import by.kirill.controller.handler.exceptions.StatusNotUpdatebleException;
 import by.kirill.dao.StatusRepository;
 import by.kirill.entity.Status;
 import by.kirill.service.api.StatusService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import java.util.Optional;
 @Transactional
 public class StatusServiceImpl implements StatusService {
 
-//    @Autowired
     private StatusRepository statusRepository;
 
     public StatusServiceImpl(StatusRepository statusRepository) {
@@ -33,7 +31,8 @@ public class StatusServiceImpl implements StatusService {
     public void deleteById(Integer id) throws StatusNotUpdatebleException {
         Status defStatus = statusRepository.findByName("available").get(0);
         if (id == defStatus.getId()) {
-            throw new StatusNotUpdatebleException();
+            throw new StatusNotUpdatebleException("The status with id: " + defStatus.getId()
+                    + " and name: " + defStatus.getStatusname() + " cannot be changed");
         }
         statusRepository.deleteById(id);
     }
@@ -74,7 +73,8 @@ public class StatusServiceImpl implements StatusService {
             throw new StatusNotUniqueException();
         }
         if (status.getId() == defStatus.getId()) {
-            throw new StatusNotUpdatebleException();
+            throw new StatusNotUpdatebleException("The status with id: " + defStatus.getId()
+                    + " and name: " + defStatus.getStatusname() + " cannot be changed");
         }
         if (statusToUpdateOpt.isPresent()) {
             return statusRepository.save(status);

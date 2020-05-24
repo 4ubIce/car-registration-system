@@ -2,7 +2,6 @@ package by.kirill.service.api;
 
 import by.kirill.controller.handler.exceptions.CarNotFoundException;
 import by.kirill.controller.handler.exceptions.StatusIncorrectException;
-import by.kirill.controller.handler.exceptions.StatusNotFoundException;
 import by.kirill.entity.Car;
 import by.kirill.entity.dto.CarDTO;
 
